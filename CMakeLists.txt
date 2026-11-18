@@ -6,11 +6,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)   # 生成 compile_commands.json
 
 include(FetchContent)
-#
+
 FetchContent_Declare(
     glfw
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw
 )
+
+FetchContent_MakeAvailable(glfw)
 
 add_library(glad STATIC vendor/glad/src/glad.c)
 target_include_directories(glad PUBLIC vendor/glad/include)
