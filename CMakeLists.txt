@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
+# support C need add xxx C flag
 project(app C CXX)
 
 set(CMAKE_CXX_STANDARD 17)

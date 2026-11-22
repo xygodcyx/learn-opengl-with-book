@@ -22,6 +22,10 @@ void processInput(GLFWwindow* window) {
   }
 }
 int main() {
+  if (!glfwInit()) {
+    return -1;
+  }
+
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -29,7 +33,6 @@ int main() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   glfwWindowHintString(GLFW_WAYLAND_APP_ID, "opengl-window");
 
-  glfwInit();
   glfwSetErrorCallback(glfw_error_Callback);
 
   GLFWwindow* window = glfwCreateWindow(455, 457, "Hello OpenGl", NULL, NULL);
@@ -48,6 +51,16 @@ int main() {
   }
 
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+  // clang-format off
+  float vertices[] = {
+    -0.5,-0.5,0.0,
+    0.5,-0.5,0.0,
+    0.0,0.5,0.0
+  };
+  // clang-format on
+  unsigned int VBO;
+  glGenBuffers(1, &VBO);
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
