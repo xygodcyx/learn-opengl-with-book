@@ -14,7 +14,7 @@ bool read_shader_source(const char* path, std::string& out) {
   std::ifstream file(path);
 
   if (!file.is_open()) {
-    return "error";
+    return false;
   }
 
   std::ostringstream buffer;
@@ -55,7 +55,7 @@ unsigned int create_program(unsigned int vert, unsigned int frag) {
 
   glGetProgramiv(program, GL_LINK_STATUS, &success);
   if (!success) {
-    glGetShaderInfoLog(program, 512, NULL, infoLog);
+    glGetProgramInfoLog(program, 512, NULL, infoLog);
     std::cout << "ERROR::PROGRAM::LINK_FAILED\n" << infoLog << std::endl;
   }
   return program;
