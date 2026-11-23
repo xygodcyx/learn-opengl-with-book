@@ -25,6 +25,7 @@ set(LIB_FILES
 )
 
 set(SOURCE_FILES 
+  src/utils.cpp
   src/main.cpp
 )
 
