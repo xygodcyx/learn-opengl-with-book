@@ -6,4 +6,13 @@ indices 的类型一定是unsigned int，不能误写为float，这些是一一�
 VAO VBO EBO/IBO
 
 
+ 
+
+
+
+
+
+
+
+
 

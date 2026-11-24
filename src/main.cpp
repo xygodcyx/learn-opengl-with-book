@@ -95,7 +95,7 @@ int main() {
   unsigned int VAO1;
   glGenVertexArrays(1, &VAO1);
   glBindVertexArray(VAO1);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GLFW_FALSE, 3 * sizeof(float),
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
 
                         (void*)0);
   glEnableVertexAttribArray(0);
@@ -108,7 +108,7 @@ int main() {
   unsigned int VAO2;
   glGenVertexArrays(1, &VAO2);
   glBindVertexArray(VAO2);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GLFW_FALSE, 3 * sizeof(float),
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
 
                         (void*)0);
   glEnableVertexAttribArray(0);
