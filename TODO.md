@@ -5,14 +5,4 @@ indices 的类型一定是unsigned int，不能误写为float，这些是一一�
 
 VAO VBO EBO/IBO
 
-
- 
-
-
-
-
-
-
-
-
-
+ebo绑定到最近的vao上，vbo是全局的数据，只是数据而已，它有什么用取决于vao和具体的program里的shader，而vao会在glVertexAttribPointer的时候引用最近的vbo

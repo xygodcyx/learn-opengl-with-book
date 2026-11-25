@@ -55,16 +55,16 @@ int main() {
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
   // compile shader
-  unsigned vertex_shader =
+  unsigned int vertex_shader =
       complie_shader("shader/simple.vert", GL_VERTEX_SHADER);
 
-  unsigned fragment_shader =
+  unsigned int fragment_shader =
       complie_shader("shader/simple.frag", GL_FRAGMENT_SHADER);
 
+  unsigned int fragment_shader2 =
+      complie_shader("shader/simple2.frag", GL_FRAGMENT_SHADER);
   unsigned int program = create_program(vertex_shader, fragment_shader);
-
-  glDeleteShader(vertex_shader);
-  glDeleteShader(fragment_shader);
+  unsigned int program2 = create_program(vertex_shader, fragment_shader2);
 
   // clang-format off
   // 给VBO用的顶点数据
@@ -125,14 +125,18 @@ int main() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glUseProgram(program);
-
     glBindVertexArray(VAO1);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glUseProgram(program2);
     glBindVertexArray(VAO2);
     glDrawArrays(GL_TRIANGLES, 0, 6);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();

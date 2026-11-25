@@ -53,6 +53,9 @@ unsigned int create_program(unsigned int vert, unsigned int frag) {
   glAttachShader(program, frag);
   glLinkProgram(program);
 
+  glDeleteShader(vert);
+  glDeleteShader(frag);
+
   glGetProgramiv(program, GL_LINK_STATUS, &success);
   if (!success) {
     glGetProgramInfoLog(program, 512, NULL, infoLog);
