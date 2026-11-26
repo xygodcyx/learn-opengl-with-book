@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "cmath"
 #include "utils.h"
 // clang-format off
 #include "glad/glad.h"
@@ -94,9 +95,8 @@ int main() {
   unsigned int VAO1;
   glGenVertexArrays(1, &VAO1);
   glBindVertexArray(VAO1);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
-
-                        (void*)0);
+  // 让vao引用最近bindbuffer的vao
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
 
   unsigned int VBO2;
@@ -107,13 +107,12 @@ int main() {
   unsigned int VAO2;
   glGenVertexArrays(1, &VAO2);
   glBindVertexArray(VAO2);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
-
-                        (void*)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
   glEnableVertexAttribArray(0);
 
   unsigned int EBO;
   glGenBuffers(1, &EBO);
+  // ebo会在bind的时候绑定到最近的vao上，所以ebo绑定到了vao2上，vao1不知道ebo
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
                GL_STATIC_DRAW);
@@ -127,15 +126,19 @@ int main() {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glUseProgram(program);
     glBindVertexArray(VAO1);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glUseProgram(program2);
+    unsigned int uniColor = glGetUniformLocation(program2, "uniColor");
+    double time = glfwGetTime();
+    float greenColor = sin(time) / 2 + 0.5;
     glBindVertexArray(VAO2);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glUniform4f(uniColor, 0.0, greenColor, 0.0, 1.0);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
